@@ -1,0 +1,3 @@
+[submodule "src/Sistema-de-cadastro-basico"]
+	path = src/Sistema-de-cadastro-basico
+	url = https://github.com/filipe2710/Sistema-de-cadastro-basico.git
