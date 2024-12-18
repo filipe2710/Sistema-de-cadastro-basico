@@ -11,41 +11,32 @@ class validators():
         
     def telefone_validate(self, action, value_if_allowed, text):
         if action == '1':  # insert
-            if value_if_allowed == "Digite o telefone do cliente":
-                return True
-            if text in "0123456789":
-                return True
-            else:
+            if not value_if_allowed.isdigit() and text not in "()- ":
                 return False
-    
+            if len(value_if_allowed) > 15:
+                return False
+        return True
     
     def codigo_validate(self, action, value_if_allowed, text):
         if action == '1':  # insert
             if value_if_allowed.isdigit():
                 return True
-            else:
-                return False
+        return False
             
             
     def name_validate (self, action, value_if_allowed, text):
         if action == '1':  # insert
-            if value_if_allowed == "Digite o nome do cliente":
-                return True
-            if value_if_allowed.isalpha():
-                return True
-            else:
+            if not value_if_allowed.replace(" ", "").isalpha():
                 return False
-            
+        return True
             
     def city_validate(self, action, value_if_allowed, text):
         if action == '1': # insert
-            if value_if_allowed == "Digite a cidade do cliente":
-                return True
-            if value_if_allowed.isalpha():
-                return True
-            else:
+            if not value_if_allowed.replace(" ", "").isalpha():
                 return False
-            
-            
-            
-            
+        return True
+    
+    
+# test
+    
+        
