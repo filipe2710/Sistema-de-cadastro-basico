@@ -11,7 +11,9 @@ class validators():
         
     def telefone_validate(self, action, value_if_allowed, text):
         if action == '1':  # insert
-            if not value_if_allowed.isdigit() and text not in "()- ":
+            if not value_if_allowed.strip():
+                return True
+            if not value_if_allowed.replace("(", "").replace(")", "").replace("-", "").isdigit():
                 return False
             if len(value_if_allowed) > 15:
                 return False
@@ -19,6 +21,8 @@ class validators():
     
     def codigo_validate(self, action, value_if_allowed, text):
         if action == '1':  # insert
+            if not value_if_allowed.strip():
+                return True
             if value_if_allowed.isdigit():
                 return True
         return False
@@ -26,13 +30,17 @@ class validators():
             
     def name_validate (self, action, value_if_allowed, text):
         if action == '1':  # insert
-            if not value_if_allowed.replace(" ", "").isalpha():
+            if not value_if_allowed.strip():
+                return True
+            if not value_if_allowed.isalpha() and not value_if_allowed.isspace:
                 return False
         return True
             
     def city_validate(self, action, value_if_allowed, text):
         if action == '1': # insert
-            if not value_if_allowed.replace(" ", "").isalpha():
+            if value_if_allowed == "Digite a cidade do cliente":
+                return True
+            if not value_if_allowed.isalpha() and not value_if_allowed.isspace:
                 return False
         return True
     

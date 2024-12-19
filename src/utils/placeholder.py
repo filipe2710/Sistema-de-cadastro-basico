@@ -4,7 +4,7 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 
-from tkinter import Entry
+from tkinter import Entry, Tk
 
 
 class entryplaceholder(Entry):
@@ -52,6 +52,11 @@ class entryplaceholder(Entry):
             return ""
         return super().get()
 
-with open("placeholder.py", "r", encoding="utf-8") as file:
-    print(file.read())
 
+# Exemplo de uso
+if __name__ == "__main__":
+    root = Tk()
+    root.geometry("300x200")
+    entry = entryplaceholder(root, placeholder="Digite algo...", color="gray")
+    entry.pack()
+    root.mainloop()

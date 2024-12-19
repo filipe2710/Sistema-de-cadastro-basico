@@ -8,7 +8,7 @@ class functions:
     def clean_function(self): # função limpar
         # limpar os campos
         self.codigo_entry.delete(0, END) # deletando o texto do campo codigo_entry
-        self.nome_entry.delete(0, END) # deletando o texto do campo nome_entry
+        self.name_entry.delete(0, END) # deletando o texto do campo name_entry
         self.telefone_entry.delete(0, END) # deletando o texto do campo telefone_entry
         self.cidade_entry.delete(0, END) # deletando o texto do campo cidade_entry
 
@@ -22,7 +22,7 @@ class functions:
     def variable(self): # função variável (variable)
          # guardando os dados importantes em uma variavel para otimizar tempo e linhas de codigo
         self.codigo = self.codigo_entry.get()
-        self.nome = self.nome_entry.get()
+        self.nome = self.name_entry.get()
         self.telefone = self.telefone_entry.get()
         self.cidade = self.cidade_entry.get()
 
@@ -45,7 +45,7 @@ class functions:
 
     def add_client(self): # função adicionar cliente (add client)
         self.variable()
-        if self.nome_entry.get() == "":
+        if self.name_entry.get() == "":
             msg = "Para cadastrar um novo cliente é necessário \n"
             msg += "preencher o campo nome do cliente"
             messagebox.showerror("Erro", msg) # mensagem de erro
@@ -53,7 +53,7 @@ class functions:
             self.connect_bd()
             self.cursor.execute(
                 """INSERT INTO clientes (nome, telefone, cidade) VALUES (?, ?, ?)""",  # inserindo os dados na tabela
-                (self.nome_entry.get(), self.telefone_entry.get(), self.cidade_entry.get()), 
+                (self.name_entry.get(), self.telefone_entry.get(), self.cidade_entry.get()), 
             )
             self.con.commit()
             self.disconnect_bd()
@@ -86,7 +86,7 @@ class functions:
         for n in self.listcli.selection(): # percorre a lista
             col1, col2, col3, col4 = self.listcli.item(n, "values") # pega os valores da lista
             self.codigo_entry.insert(END, col1)
-            self.nome_entry.insert(END, col2)
+            self.name_entry.insert(END, col2)
             self.telefone_entry.insert(END, col3)
             self.cidade_entry.insert(END, col4)
 
@@ -115,7 +115,7 @@ class functions:
     def seach(self): # função para buscar cliente (seach)
         self.connect_bd()
         self.listcli.delete(*self.listcli.get_children()) # deletando os dados da lista
-        nome = self.nome_entry.get() + '%'  # buscando o nome do cliente
+        nome = self.name_entry.get() + '%'  # buscando o nome do cliente
         self.cursor.execute("""SELECT cod, nome, telefone, cidade FROM clientes WHERE nome LIKE ? ORDER BY nome ASC""", (nome, )) # buscando o nome do cliente
         data = self.cursor.fetchall() # buscando os dados
         for i in data: # percorrendo os dados
