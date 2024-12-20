@@ -48,7 +48,7 @@ root = tk.Tk()  # colocando o tkintes em uma variavel
 
 
 # classe da application
-class Application(functions, report, validators, Form_handler):
+class Application(functions, report, validators):
     def __init__(self):  # funçãa metodo construtor init. com o parametro self
         self.root = root  # atribuindo a janela principal a intancia da 
         self.validator = validators(self.root)
@@ -56,7 +56,6 @@ class Application(functions, report, validators, Form_handler):
         self.frame_of_screen()  # chamando a função frame of screen (quadro de tela)
         self.creating_buttons()  # chamando a função criating buttons (criando botões)
         self.label_and_inputs()  # chamando a função label and inputs (rótulos e entradas)
-        self.form_handler = Form_handler()
         self.list_frame2()
         self.set_up_table()
         self.select_list()
@@ -125,18 +124,6 @@ class Application(functions, report, validators, Form_handler):
         )
         self.frame2.place(relx=0.03, rely=0.5, relwidth=0.94, relheight=0.46)
 
-    '''def text_bubble(self): # função text bubble (bola de texto)
-        ToolTip(self.codigo_entry, "Digite o código do cliente")
-        ToolTip(self.name_entry, "Digite o nome do cliente")
-        ToolTip(self.telefone_entry, "Digite o telefone do cliente")
-        ToolTip(self.cidade_entry, "Digite a cidade do cliente")
-        ToolTip(self.bt_limpar, "Limpar campos")
-        ToolTip(self.bt_buscar, "Buscar cliente")
-        ToolTip(self.bt_novo, "Adicionar novo cliente")
-        ToolTip(self.bt_alterar, "Alterar cliente selecionado")
-        ToolTip(self.bt_apagar, "Apagar cliente selecionado")      '''
-
-
     def creating_buttons(self):  # ? função criating buttons (criando botões)
         ''' podemo fazer moldura tambem ultilizando a função:
             self.canvas_bt = canvas(self.frame1, bd=, bg=,   highlightbackground=, highlightthickness=)        
@@ -153,23 +140,11 @@ class Application(functions, report, validators, Form_handler):
         self.abas_control.place(relx=0.01, rely=0.01, relwidth=0.98, relheight=0.98)
 
         # criando botão Limpar
-        self.bt_limpar = Button(
-            self.aba1_control,
-            text="Limpa",
-            bd=3,
-            bg="#6197E8",
-            fg="white",
-            font=(
-                "arial",
-                8,
-                "bold",
-            ),
+        self.bt_limpar = Button(self.aba1_control, text="Limpa", bd=3, bg="#6197E8", fg="white", font=("arial", 8, "bold",),
             activebackground="#108ecb", # cor de fundo quando clica
             activeforeground="white",  # texto de fundo quando clica
-
             # comando que vai ser executado quando o botão for clicado
-            command=self.clean_function,
-        )
+            command=self.clean_function,)
         # ? criando o botão limpar
         self.bt_limpar.place(relx=0.20, rely=0.15, relwidth=0.1, relheight=0.15) # colocando o botão limpar no frame1
 
@@ -281,7 +256,7 @@ class Application(functions, report, validators, Form_handler):
         self.lb_nome = Label(self.aba1_control, text="Nome", bg="#FAEBD7", fg="#6197e8", font=("arial", 8))
         self.lb_nome.place(relx=0.02, rely=0.35)
 
-        self.name_entry = entryplaceholder(self.aba1_control, placeholder="Digite o nome do cliente", color="gray", font=("arial", 8), validate="focusout", validatecommand=self.validator.vcmd_name)
+        self.name_entry = entryplaceholder(self.aba1_control, placeholder="Digite o nome do cliente", color="gray", font=("arial", 8), validate="key", validatecommand=self.validator.vcmd_name)
         self.name_entry.place(relx=0.09, rely=0.35, relwidth=0.45, relheight=0.10)
         self.name_entry.put_placeholder()
         
@@ -292,7 +267,6 @@ class Application(functions, report, validators, Form_handler):
         # telefone
         self.lb_telefone = Label(self.aba1_control, text="Telefone", bg="#FAEBD7", fg="#6197e8", font=("arial", 8))
         self.lb_telefone.place(relx=0.05, rely=0.5)
-
         self.telefone_entry = entryplaceholder(self.aba1_control, placeholder="Digite o telefone do cliente", font=("arial", 8), validate="focusout", validatecommand=self.validator.vcmd_telefone)
         self.telefone_entry.place(relx=0.15, rely=0.5, relwidth=0.35, relheight=0.10)
         self.telefone_entry.put_placeholder()
@@ -308,7 +282,7 @@ class Application(functions, report, validators, Form_handler):
         # endereço
         self.lb_endereco = Label(self.aba1_control, text="Endereço", bg="#FAEBD7", fg="#6197e8", font=("arial", 8))
         self.lb_endereco.place(relx=0.05, rely=0.65)
-        self.endereco_entry = entryplaceholder(self.aba1_control, placeholder="", font=("arial", 8, "bold"))
+        self.endereco_entry = entryplaceholder(self.aba1_control, placeholder="Digite o seu endereço", font=("arial", 8, "bold"))
         self.endereco_entry.place(relx=0.15, rely=0.65, relwidth=0.3, relheight=0.10)
         
         # bairro
@@ -332,10 +306,6 @@ class Application(functions, report, validators, Form_handler):
         self.bt_calendar.place(relx=0.5, rely=0.10, relwidth=0.08)
         self.calendar_entry = Entry(self.aba2_control, width=10, font=("arial", 8)) 
         self.calendar_entry.place(relx=0.5, rely=0.25)
-
-    def save_data(self):
-        # Chama o método de salvar dados da classe Form_handler
-        self.form_handler.save_data(self.name_entry, self.telefone_entry, self.codigo_entry, self.cidade_entry)
 
     def list_frame2(self):
         # Criando o Treeview com barra de rolagem

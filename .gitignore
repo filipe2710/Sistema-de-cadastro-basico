@@ -12,6 +12,7 @@ build/
 # Arquivos do sistema
 Clientes.bd
 database.bd
+test.db
 
 
 # Arquivos de log

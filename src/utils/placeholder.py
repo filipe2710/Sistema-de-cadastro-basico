@@ -14,7 +14,7 @@ class entryplaceholder(Entry):
         self.placeholder = placeholder
         self.placeholder_color = color
         self.default_fg_color = self["fg"] if "fg" in kwargs else "black"
-        self.is_placeholder_visible = False  # Estado do placeholder
+        self.is_placeholder_visible = True  # Estado do placeholder
 
         self.put_placeholder()
 
@@ -24,7 +24,7 @@ class entryplaceholder(Entry):
 
     def put_placeholder(self):
         """Exibe o placeholder no campo."""
-        if not self.get().strip():
+        if self.get().strip() == "":
             self.is_placeholder_visible = True
             self.delete(0, "end")
             self.insert(0, self.placeholder)

@@ -1,10 +1,22 @@
 
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 
 from modules import *
-
+from utils.form_handler import Form_handler
+from utils.placeholder import entryplaceholder
 
 # classe de fwnções(functions)
-class functions:
+class functions(Form_handler):
+    def __init__(self, master):
+        # Inicialize os widgets placeholder
+        self.name_entry = entryplaceholder(master, placeholder="Digite o nome do cliente", color="gray")
+        self.telefone_entry = entryplaceholder(master, placeholder="Digite o telefone do cliente", color="gray")
+        self.codigo_entry = entryplaceholder(master, placeholder="Digite o código do cliente", color="gray")
+        self.cidade_entry = entryplaceholder(master, placeholder="Digite a cidade do cliente", color="gray")
+
     def clean_function(self): # função limpar
         # limpar os campos
         self.codigo_entry.delete(0, END) # deletando o texto do campo codigo_entry
@@ -21,10 +33,10 @@ class functions:
 
     def variable(self): # função variável (variable)
          # guardando os dados importantes em uma variavel para otimizar tempo e linhas de codigo
-        self.codigo = self.codigo_entry.get()
-        self.nome = self.name_entry.get()
-        self.telefone = self.telefone_entry.get()
-        self.cidade = self.cidade_entry.get()
+        self.codigo = self.codigo_entry.get_value()
+        self.nome = self.name_entry.get_value()
+        self.telefone = self.telefone_entry.get_value()
+        self.cidade = self.cidade_entry.get_value()
 
     def set_up_table(self): # função criar/configurar uma tabela (set up table)
         self.connect_bd() # conectando a base de dados
@@ -49,16 +61,17 @@ class functions:
             msg = "Para cadastrar um novo cliente é necessário \n"
             msg += "preencher o campo nome do cliente"
             messagebox.showerror("Erro", msg) # mensagem de erro
-        else:
-            self.connect_bd()
-            self.cursor.execute(
-                """INSERT INTO clientes (nome, telefone, cidade) VALUES (?, ?, ?)""",  # inserindo os dados na tabela
-                (self.name_entry.get(), self.telefone_entry.get(), self.cidade_entry.get()), 
-            )
-            self.con.commit()
-            self.disconnect_bd()
-            self.select_list()
-            self.clean_function()
+            return
+        self.save_data()
+        self.connect_bd()
+        self.cursor.execute(
+            """INSERT INTO clientes (nome, telefone, cidade) VALUES (?, ?, ?)""",  # inserindo os dados na tabela
+            (self.nome, self.telefone, self.cidade), 
+        )
+        self.con.commit()
+        self.disconnect_bd()
+        self.select_list()
+        self.clean_function()
 
         # Limpa todos os itens atuais no Treeview
 
