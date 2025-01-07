@@ -248,7 +248,7 @@ class Application(functions, report, validators):
         self.lb_codigo = Label(self.aba1_control, text="Código", bg="#FAEBD7", fg="#6197e8", font=("arial", 8))  # criando o rótulo codigo
         self.lb_codigo.place(relx=0.05, rely=0.08)  # colocando o rótulo codigo no frame1
 
-        self.codigo_entry = entryplaceholder(self.aba1_control, placeholder="codigo", font=("arial", 8), validate="focusout", validatecommand=self.validator.vcmd_codigo)  # criando a entrada codigo
+        self.codigo_entry = entryplaceholder(self.aba1_control, placeholder="codigo", font=("arial", 8), validate_cmd=self.validator.vcmd_codigo, validate="key")  # criando a entrada codigo
         self.codigo_entry.place(relx=0.05, rely=0.19, relwidth=0.1, relheight=0.10)  # colocando a entrada codigo no frame1t
         self.codigo_entry.put_placeholder()
     
@@ -256,26 +256,24 @@ class Application(functions, report, validators):
         self.lb_nome = Label(self.aba1_control, text="Nome", bg="#FAEBD7", fg="#6197e8", font=("arial", 8))
         self.lb_nome.place(relx=0.02, rely=0.35)
 
-        self.name_entry = entryplaceholder(self.aba1_control, placeholder="Digite o nome do cliente", color="gray", font=("arial", 8), validate="key", validatecommand=self.validator.vcmd_name)
+        self.name_entry = entryplaceholder(self.aba1_control, placeholder="Digite o nome do cliente", color="gray", font=("arial", 8), validate_cmd=self.validator.vcmd_name, validate="key")
         self.name_entry.place(relx=0.09, rely=0.35, relwidth=0.45, relheight=0.10)
-        self.name_entry.put_placeholder()
-        
+                
         # CEP
-        self.cep_entry = entryplaceholder(self.aba1_control, placeholder="Digite o CEP do cliente", font=("arial", 8, "bold"))
+        self.cep_entry = entryplaceholder(self.aba1_control, placeholder="Digite o CEP do cliente", font=("arial", 8, "bold"), validate_cmd=self.validator.vcmd_zip_code, validate="key")
         self.cep_entry.place(relx=0.7, rely=0.35, relwidth=0.25, relheight=0.10)
 
         # telefone
         self.lb_telefone = Label(self.aba1_control, text="Telefone", bg="#FAEBD7", fg="#6197e8", font=("arial", 8))
         self.lb_telefone.place(relx=0.05, rely=0.5)
-        self.telefone_entry = entryplaceholder(self.aba1_control, placeholder="Digite o telefone do cliente", font=("arial", 8), validate="focusout", validatecommand=self.validator.vcmd_telefone)
+        self.telefone_entry = entryplaceholder(self.aba1_control, placeholder="Digite o telefone do cliente", font=("arial", 8), validate_cmd=self.validator.vcmd_telefone, validate="key")
         self.telefone_entry.place(relx=0.15, rely=0.5, relwidth=0.35, relheight=0.10)
-        self.telefone_entry.put_placeholder()
 
         # cidade
         self.lb_cidade = Label(self.aba1_control, text="Cidade", bg="#FAEBD7", fg="#6197e8", font=("arial", 8, "bold"))
         self.lb_cidade.place(relx=0.53, rely=0.5)
 
-        self.cidade_entry = entryplaceholder(self.aba1_control, placeholder="Digite a cidade do cliente", font=("arial", 8), validate="focusout", validatecommand=self.validator.vcmd_city)
+        self.cidade_entry = entryplaceholder(self.aba1_control, placeholder="Digite a cidade do cliente", font=("arial", 8), validate_cmd=self.validator.vcmd_city(), validate="key")
         self.cidade_entry.place(relx=0.63, rely=0.5, relwidth=0.3, relheight=0.10)
         self.cidade_entry.put_placeholder()
         
@@ -284,7 +282,7 @@ class Application(functions, report, validators):
         self.lb_endereco.place(relx=0.05, rely=0.65)
         self.endereco_entry = entryplaceholder(self.aba1_control, placeholder="Digite o seu endereço", font=("arial", 8, "bold"))
         self.endereco_entry.place(relx=0.15, rely=0.65, relwidth=0.3, relheight=0.10)
-        
+                
         # bairro
         self.lb_bairro = Label(self.aba1_control, text="Bairro", bg="#FAEBD7", fg="#6197e8", font=("arial", 8))
         self.lb_bairro.place(relx=0.53, rely=0.65)
