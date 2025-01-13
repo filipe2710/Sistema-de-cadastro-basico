@@ -8,62 +8,40 @@ from tkinter import Entry, Tk, Button
 
 
 class entryplaceholder(Entry):
-    def __init__(self, master=None, placeholder="PLACEHOLDER", color="gray", validate_cmd=None, *args, **kwargs):
+    def __init__(self, master=None, placeholder='PLACEHOLDER', color='gray', *args, **kwargs):
         super().__init__(master, *args, **kwargs)
-
+        
         self.placeholder = placeholder
         self.placeholder_color = color
-        self.default_fg_color = kwargs.get("fg", "black")
-        self.is_placeholder_visible = False  # Inicialmente o placeholder não está visível
-        self.validate_cmd = validate_cmd  # Validação personalizada
-        self.put_placeholder()
-
-        # Vincular eventos de foco
+        self.default_fg_color = self['fg']  # Salva a cor padrão do texto
+        
         self.bind("<FocusIn>", self.focus_in)
         self.bind("<FocusOut>", self.focus_out)
-
-        # Configurar a validação
-        if validate_cmd:
-            self.config(validate="key", validatecommand=(self.register(self.validate_entry), "%P"))
-
-    def put_placeholder(self):
-        """Exibe o placeholder no campo se ele estiver vazio."""
-        if not self.get().strip():  # Só insere o placeholder se o campo estiver vazio
-            self.is_placeholder_visible = True
-            self.delete(0, "end")
-            self.insert(0, self.placeholder)
-            self["fg"] = self.placeholder_color
-
-    def remove_placeholder(self):
-        """Remove o placeholder se ele estiver visível."""
-        if self.is_placeholder_visible:
-            self.is_placeholder_visible = False
-            self.delete(0, "end")
-            self["fg"] = self.default_fg_color
-
+        
+        self.put_place_holder()
+    
+    # Adiciona o placeholder e altera a cor do texto para a cor do placeholder
+    def put_place_holder(self):
+        self.insert(0, self.placeholder)
+        self['fg'] = self.placeholder_color
+    
+    # Remove o placeholder quando o usuário clica no campo
     def focus_in(self, *args):
-        """Evento ao ganhar foco no campo."""
-        self.remove_placeholder()
-
+        if self['fg'] == self.placeholder_color:  # Verifica se o texto atual é o placeholder
+            self.delete(0, 'end')  # Limpa o campo
+            self['fg'] = self.default_fg_color  # Restaura a cor original
+    
+    # Se o usuário sair do campo sem digitar nada, recoloca o placeholder
     def focus_out(self, *args):
-        """Evento ao perder foco no campo."""
-        if not self.get().strip():  # Se o campo estiver vazio, o placeholder volta
-            self.put_placeholder()
-
-    def validate_entry(self, value_if_allowed):
-        """Executa a validação personalizada, ignorando o placeholder."""
-        if self.is_placeholder_visible:
-            return True  # Ignorar validação se o placeholder está visível
-        if self.validate_cmd:
-            return self.validate_cmd(value_if_allowed)
-        return True
-
+        if not self.get():  # Se o campo estiver vazio
+            self.put_place_holder()
+    
+    # Método que retorna o valor real do campo, sem o placeholder
     def get_value(self):
-        """Retorna o valor real do campo, ignorando o placeholder."""
-        if self.is_placeholder_visible:
-            return ""
-        return super().get()
-
+        if self['fg'] == self.placeholder_color:
+            return ''
+        else:
+            return self.get()
 
 def telefone_validate(value_if_allowed):
     # A função deve validar apenas números
