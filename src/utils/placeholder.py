@@ -60,7 +60,7 @@ if __name__ == "__main__":
         root,
         placeholder="Digite o telefone",
         color="gray",
-        validate_cmd=telefone_validate,  # Validação de telefone
+        validatecommand=telefone_validate,  # Validação de telefone
     )
     entry_validated.pack(pady=20)
 

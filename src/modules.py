@@ -2,7 +2,7 @@
 
 import tkinter as tk  # biblioteca GUI      
 from tkinter import *  # importando todas as propriedade do tkinter
-from tkinter import ttk
+from tkinter import ttk, Tk, Canvas
 from tkinter import messagebox, scrolledtext, Menu
 from tkinter import PhotoImage
 from tkcalendar import Calendar, DateEntry
