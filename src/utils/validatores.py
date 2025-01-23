@@ -73,7 +73,7 @@ class validators(format_entry):
                 return True
             else:
                 return False
-            
+        return True
     
 # test
     

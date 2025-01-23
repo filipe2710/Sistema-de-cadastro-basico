@@ -286,7 +286,7 @@ class Application(functions, report, validators, format_entry):
         self.lb_endereco = Label(self.aba1_control, text="Endereço", bg="#FAEBD7", fg="#6197e8", font=("arial", 8))
         self.lb_endereco.place(relx=0.05, rely=0.65)
         vcmd_address = self.root.register(self.address_validate)
-        self.endereco_entry = entryplaceholder(self.aba1_control, placeholder="Digite o seu endereço", font=("arial", 8, "bold"), validatecommand=(vcmd_address, "%d", "%P", "%s"), validate="key")
+        self.endereco_entry = entryplaceholder(self.aba1_control, placeholder="Digite o endereço do cliente", font=("arial", 8), validatecommand=(vcmd_address, "%d", "%P", "%s"), validate="key")
         self.endereco_entry.place(relx=0.15, rely=0.65, relwidth=0.3, relheight=0.10)
                 
         # bairro
