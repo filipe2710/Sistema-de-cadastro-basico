@@ -15,44 +15,19 @@ class validators(format_entry):
 #        self.vcmd_zip_code = (root.register(self.zip_code_validate), "%d", "%P", "%s")
 #        self.vcmd_address = (root.register(self.address_validate), "%d", "%P", "%s")  # Validador de endereço
         
-    
     def phone_validate(self, action, value_if_allowed, text):        
-        """
-        Valida a entrada para o campo de telefone.
-        Permite apenas números e caracteres específicos (ex.: '(', ')', '-', ' ').
-        """
-
-        if action == '1':  # Inserção de caractere
-            # Remove qualquer formatação temporariamente para validar os números
-            clean_value = value_if_allowed.replace("(", "").replace(")", "").replace(" ", "").replace("-", "")
-            
-            # Permite apenas números
-            if not clean_value.isdigit():
+        if action == '1':
+            claan_value = value_if_allowed.replace("(", "").replace(")", "").replace(" ", "").replace("-", "")
+            if not claan_value.isdigit():
                 return False
-            
-            # Limita o comprimento total (apenas números) a 11 caracteres (DDD + número)
-            if len(clean_value) > 11:
+            if len(claan_value) > 11:   
                 return False
-            
-            # Aplica formatação automática
-            formatted_value = clean_value
-            if len(clean_value) >= 1:
-                formatted_value = f"({clean_value[:2]}"
-            if len(clean_value) >= 3:
-                formatted_value += f") {clean_value[2:6]}"
-            if len(clean_value) > 6:
-                formatted_value = f"{formatted_value[:9]}-{clean_value[6:]}"
-            
-            # Atualiza o campo de texto com o valor formatado
-            self.root.after(1, lambda: self.root.focus_get().delete(0, "end"))
-            self.root.after(1, lambda: self.root.focus_get().insert(0, formatted_value))
-            
             return True
-        elif action == '0':  # Remoção de caractere
+        elif action == '0':
             return True
-        
         return False
-    
+        
+
     
     def codigo_validate(self, action, value_if_allowed, text):
         if action == '1':  # insert

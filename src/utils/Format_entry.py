@@ -11,8 +11,17 @@ class format_entry:
     if len(value_if_allowed) == 5 and '-' not in value_if_allowed:
       self.root.after(1, lambda: self.root.focus_get().insert('end', '-'))
       
-  def format_phone_number(self, value_if_allowed):
-    if len(value_if_allowed) == 11:
-      formatted = f"((value_if_allowed[:2])) (value_if_allowed[2:2])-(value_if_allowed[2:])"
-      self.root.after(1, lambda: self.root.focus_get().delete(0, 'end'))
-      self.root.after(1, lambda: self.root.focus_get().insert('end', formatted))
+  def format_phone_number(self, entry_widget):
+    current_value = entry_widget.get()
+    clean_value = current_value.replace("(", "").replace(")", "").replace(" ", "").replace("-", "")
+    
+    if len(clean_value) == 2:
+         formatted_value = f"({clean_value}"
+    elif len(clean_value) <= 6:
+        formatted_value = f"({clean_value[:2]}) {clean_value[2:]}"
+    else:
+        formatted_value = f"({clean_value[:2]}) {clean_value[2:7]}-{clean_value[7:]}"
+        
+    entry_widget.delete(0, 'end')
+    entry_widget.insert('end', formatted_value)
+    

@@ -39,6 +39,12 @@ try:
     print("importado o Form_handler com sucesso")
 except: 
     print("importado o Form_handler com erro")
+try:
+    from utils.Format_entry import format_entry
+    print("importado o format_entry com sucesso")
+except: 
+    print("importado o format_entry com erro")
+
 
 
 # treinando com GUI no tkinter a primeira vez
@@ -266,6 +272,7 @@ class Application(functions, report, validators):
         self.lb_telefone.place(relx=0.05, rely=0.5)
         vcmd_phone = self.root.register(self.phone_validate)
         self.telefone_entry = entryplaceholder(self.aba1_control, placeholder="Digite o telefone do cliente", font=("arial", 8), validatecommand=(vcmd_phone, "%d", "%P", "%s"), validate="key")
+        self.telefone_entry.bind("<KeyRelease>", lambda event: self.format_phone_number(event.widget))
         self.telefone_entry.place(relx=0.15, rely=0.5, relwidth=0.35, relheight=0.10)
 
         # cidade
