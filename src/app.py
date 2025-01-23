@@ -53,7 +53,7 @@ except:
 
 
 # classe da application
-class Application(functions, report, validators):
+class Application(functions, report, validators, format_entry):
     def __init__(self):  # funçãa metodo construtor init. com o parametro self
         self.root = Tk()  # colocando o tkintes em uma variavel
         self.screen()  # chamando a função screen (tela)
@@ -73,9 +73,9 @@ class Application(functions, report, validators):
         self.bairro_entry.delete(0, END)
             
         # Configurando a fonte antes de inserir os valores
-        self.cidade_entry.config(font=("arial", 8, "bold"))
-        self.endereco_entry.config(font=("arial", 8, "bold"))
-        self.bairro_entry.config(font=("arial", 8, "bold"))
+        self.cidade_entry.config(font=("arial", 8,), fg="black")
+        self.endereco_entry.config(font=("arial", 8,), fg="black")
+        self.bairro_entry.config(font=("arial", 8,), fg="black")
         
         # Obtem o CEP do campo de entrada
         zipcode = self.cep_entry.get()
@@ -264,7 +264,7 @@ class Application(functions, report, validators):
                 
         # CEP
         vcmd_zip_code = self.root.register(self.zip_code_validate)
-        self.cep_entry = entryplaceholder(self.aba1_control, placeholder="Digite o CEP do cliente", font=("arial", 8, "bold"), validatecommand=(vcmd_zip_code, "%d", "%P", "%s"), validate="key")
+        self.cep_entry = entryplaceholder(self.aba1_control, placeholder="Digite o CEP do cliente", font=("arial", 8), validatecommand=(vcmd_zip_code, "%d", "%P", "%s"), validate="key")
         self.cep_entry.place(relx=0.7, rely=0.35, relwidth=0.25, relheight=0.10)
 
         # telefone
@@ -272,7 +272,7 @@ class Application(functions, report, validators):
         self.lb_telefone.place(relx=0.05, rely=0.5)
         vcmd_phone = self.root.register(self.phone_validate)
         self.telefone_entry = entryplaceholder(self.aba1_control, placeholder="Digite o telefone do cliente", font=("arial", 8), validatecommand=(vcmd_phone, "%d", "%P", "%s"), validate="key")
-        self.telefone_entry.bind("<KeyRelease>", lambda event: self.format_phone_number(event.widget))
+        self.telefone_entry.bind("<KeyRelease>", lambda event: self.format_phone_number(event.widget)) # format phone
         self.telefone_entry.place(relx=0.15, rely=0.5, relwidth=0.35, relheight=0.10)
 
         # cidade
