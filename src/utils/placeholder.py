@@ -22,12 +22,13 @@ class entryplaceholder(Entry):
     
     # Adiciona o placeholder e altera a cor do texto para a cor do placeholder
     def put_place_holder(self):
-        self.insert(0, self.placeholder)
-        self['fg'] = self.placeholder_color
+        if not self.get() and self.get() != self.placeholder:
+            self.insert(0, self.placeholder)
+            self['fg'] = self.placeholder_color
     
     # Remove o placeholder quando o usuário clica no campo
     def focus_in(self, *args):
-        if self['fg'] == self.placeholder_color:  # Verifica se o texto atual é o placeholder
+        if self.get() == self.placeholder:  # Verifica se o texto atual é o placeholder
             self.delete(0, 'end')  # Limpa o campo
             self['fg'] = self.default_fg_color  # Restaura a cor original
     
@@ -38,10 +39,11 @@ class entryplaceholder(Entry):
     
     # Método que retorna o valor real do campo, sem o placeholder
     def get_value(self):
-        if self['fg'] == self.placeholder_color:
+        value = self.get()
+        if value == self.placeholder and self['fg'] == self.placeholder_color:
             return ''
         else:
-            return self.get()
+            return value
 
 def telefone_validate(value_if_allowed):
     # A função deve validar apenas números

@@ -1,39 +1,45 @@
 import sys
 import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../src')))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 
-import unittest
-from modules import Tk
-from utils.placeholder import entryplaceholder
+from src.modules import Tk, pytest
+from src.utils.placeholder import entryplaceholder
 
-
-class TestEntryPlaceholder(unittest.TestCase):
-    def setUp(self):
-        self.root = Tk()
-        self.entry = entryplaceholder(self.root, placeholder="Digite o nome")
-        
-    def tearDown(self):
-        self.entry.destroy()
-        self.root.destroy()
-        
-    def test_placeholder_cleared_on_focus(self):
-        """Testa se o placeholder é removido ao ganhar foco."""
-        self.entry.focus_set()  # Coloca o foco no widget
-        self.entry.update_idletasks()  # Atualiza o estado do widget
-        self.assertEqual(self.entry.get(), "")  # O placeholder deve ter sido removido
-
-    def test_no_placeholder_restored_with_user_input(self):
-        """Testa se o placeholder não é restaurado quando há texto do usuário."""
-        self.entry.focus_set()  # Coloca o foco no widget
-        self.entry.insert(0, "User input")
-        self.entry.focus_out()  # Simula o foco novamente
-        self.assertEqual(self.entry.get(), "User input")  # O texto do usuário deve ser preservado
-
-    def test_get_value_with_user_input(self):
-        """Testa se `get_value` retorna o valor inserido pelo usuário."""
-        self.entry.focus_set()  # Coloca o foco no widget
-        self.entry.insert(0, "User input")
-        self.assertEqual(self.entry.get_value(), "User input")  # Deve retornar o texto do usuário
-
-if __name__ == "__main__":
-    unittest.main()
+@pytest.fixture
+def setup_entry():
+    """ fixture para criar o ambiente de testes"""
+    root = Tk()
+    root.withdraw()
+    entry = entryplaceholder(root, placeholder="Digite o nome", color="gray")
+    yield entry, root
+    root.destroy()
+    
+def test_placeholer_cleared_in_focus(setup_entry):
+    """ Testa se o placeholder é removido quando o campo é focado """
+    entry, root = setup_entry
+    entry.focus_set()
+    root.update()
+    assert entry.get() == ""
+    
+def test_placeholder_restored_on_focus_out(setup_entry):
+    """ Testa se o placeholder é restaurado quando o campo perde o foco """
+    entry, root = setup_entry
+    entry.focus_set()
+    entry.focus_out()
+    root.update_idletasks()
+    assert entry.get() == "Digite o nome"
+    
+def test_get_value_with_user_input(setup_entry):
+    """ Testa se o método get() retorna o valor do usuário """
+    entry, root = setup_entry
+    entry.focus_set()
+    root.update()
+    entry.insert(0, "User input")
+    assert entry.get_value() == "User input"
+    
+def test_get_value_with_placeholder(setup_entry):
+    """ Testa se o método get() retorna um valor vazio quando o placeholder está ativo """
+    entry, root = setup_entry
+    entry.focus_set()
+    root.update_idletasks()
+    assert entry.get_value() == ""

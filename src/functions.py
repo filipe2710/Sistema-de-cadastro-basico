@@ -23,6 +23,8 @@ class functions(Form_handler):
         self.name_entry.delete(0, END) # deletando o texto do campo name_entry
         self.telefone_entry.delete(0, END) # deletando o texto do campo telefone_entry
         self.cidade_entry.delete(0, END) # deletando o texto do campo cidade_entry
+        self.zip_code_entry.delete(0, END)
+        self.endereco_entry.delete(0, END)
 
     def connect_bd(self): # função conectar a base de dados
         self.con = sqlite3.connect("clientes.bd") # conectando a base de dados

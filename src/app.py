@@ -78,7 +78,7 @@ class Application(functions, report, validators, format_entry):
         self.bairro_entry.config(font=("arial", 8,), fg="black")
         
         # Obtem o CEP do campo de entrada
-        zipcode = self.cep_entry.get()
+        zipcode = self.zip_code_entry.get()
         
         # faz requisição para a API viacep
         try:
@@ -264,8 +264,8 @@ class Application(functions, report, validators, format_entry):
                 
         # CEP
         vcmd_zip_code = self.root.register(self.zip_code_validate)
-        self.cep_entry = entryplaceholder(self.aba1_control, placeholder="Digite o CEP do cliente", font=("arial", 8), validatecommand=(vcmd_zip_code, "%d", "%P", "%s"), validate="key")
-        self.cep_entry.place(relx=0.7, rely=0.35, relwidth=0.25, relheight=0.10)
+        self.zip_code_entry = entryplaceholder(self.aba1_control, placeholder="Digite o CEP do cliente", font=("arial", 8), validatecommand=(vcmd_zip_code, "%d", "%P", "%s"), validate="key")
+        self.zip_code_entry.place(relx=0.7, rely=0.35, relwidth=0.25, relheight=0.10)
 
         # telefone
         self.lb_telefone = Label(self.aba1_control, text="Telefone", bg="#FAEBD7", fg="#6197e8", font=("arial", 8))
