@@ -45,41 +45,4 @@ class entryplaceholder(Entry):
         else:
             return value
 
-def telefone_validate(value_if_allowed):
-    # A função deve validar apenas números
-    if value_if_allowed.isdigit() or value_if_allowed == "":
-        return True
-    return False  # Bloqueia a inserção de caracteres não numéricos
-
-
-if __name__ == "__main__":
-    root = Tk()
-    root.geometry("400x300")
-    root.title("Teste Entry com Placeholder")
-
-    # Campo com placeholder e validação de telefone
-    entry_validated = entryplaceholder(
-        root,
-        placeholder="Digite o telefone",
-        color="gray",
-        validatecommand=telefone_validate,  # Validação de telefone
-    )
-    entry_validated.pack(pady=20)
-
-    # Campo sem validação
-    entry_no_validation = entryplaceholder(
-        root,
-        placeholder="Digite algo aqui...",
-        color="gray"
-    )
-    entry_no_validation.pack(pady=20)
-
-    # Botão para obter valores dos campos
-    def show_values():
-        print(f"Telefone: '{entry_validated.get_value()}'")
-        print(f"Outro Campo: '{entry_no_validation.get_value()}'")
-
-    btn = Button(root, text="Mostrar Valores", command=show_values)
-    btn.pack(pady=20)
-
-    root.mainloop()
+    
