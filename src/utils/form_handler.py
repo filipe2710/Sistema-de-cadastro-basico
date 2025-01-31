@@ -11,29 +11,20 @@ class Form_handler:
      self.telefone_entry = telefone_entry
      self.codigo_entry = codigo_entry
      self.cidade_entry = cidade_entry
-   
+     
+   def get_entry_value(self, entry):
+     if entry is None:
+       return None
+     value = entry.get().strip()
+     if value in  ["Digite o nome do cliente", "Digite o telefone do cliente", "Digite a cidade do cliente"]:
+       return ""
+     return value
 
    def save_data(self):  # função de salvar os dados
-      name = self.name_entry.get()
-      telefone = self.telefone_entry.get()
-      codigo = self.codigo_entry.get()
-      city = self.cidade_entry.get()
-
-    # Verifique e substitua o placeholder por vazio
-      if name == "Digite o nome do cliente" or not name.strip():
-          name = ""  # Substituir por string vazia
-      if telefone == "Digite o telefone do cliente" or not telefone.strip():
-          telefone = ""  # Substituir por string vazia
-      if city == "Digite a cidade do cliente" or not city.strip():
-          city = ""  # Substituir por string vazia
-      if not codigo.strip():
-          codigo = ""  # Substituir por string vazia ou 0, dependendo do seu caso
-      
-      # Atribui valores validados para os campos
-      self.nome = name
-      self.telefone = telefone
-      self.codigo = codigo
-      self.cidade = city
+      self.name = self.get_entry_value(self.name_entry)
+      self.telefone = self.get_entry_value(self.telefone_entry)
+      self.codigo = self.get_entry_value(self.codigo_entry)
+      self.cidade = self.get_entry_value(self.cidade_entry)
 
        # salvar dados na base de dados
    def db_save(name, telefone, codigo, city):
