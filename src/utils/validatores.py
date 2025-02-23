@@ -6,15 +6,6 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from utils.Format_entry import format_entry
 
 class validators(format_entry):
-#    def __init__(self, root):
-#        self.root = root
-#        self.vcmd_telefone = root.register(self.telefone_validate)
-#        self.vcmd_codigo = (root.register(self.codigo_validate), "%d", "%P", "%s")
-#        self.vcmd_name = (root.register(self.name_validate), "%d", "%P", "%s")
-#        self.vcmd_city = (root.register(self.city_validate), "%d", "%P", "%s")
-#        self.vcmd_zip_code = (root.register(self.zip_code_validate), "%d", "%P", "%s")
-#        self.vcmd_address = (root.register(self.address_validate), "%d", "%P", "%s")  # Validador de endereço
-        
     def phone_validate(self, action, value_if_allowed, text):        
         if action == '1':
             claan_value = value_if_allowed.replace("(", "").replace(")", "").replace(" ", "").replace("-", "")
@@ -40,9 +31,22 @@ class validators(format_entry):
             if value_if_allowed == "Digite o nome do cliente":
                 return True
             if not value_if_allowed.strip():
+                return False
+            if all(c.isalpha() or c.isspace() for c in value_if_allowed):
+                return True
+            return False
+        return False
+             
+    def name_validate (self, action, value_if_allowed, text):    
+        if action == '1':  # insert
+            if value_if_allowed == "Digite o nome do cliente":
+                return True
+            if not value_if_allowed.strip():
                 return True
             if not value_if_allowed.isalpha() and not value_if_allowed.isspace():
                 return False
+        
+            
         
             
     def city_validate(self, action, value_if_allowed, text):
