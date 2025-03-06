@@ -27,6 +27,8 @@ class validators(format_entry):
         return False
              
     def name_validate (self, action, value_if_allowed, text):    
+        print(f"action={action}, value_if_allowed={value_if_allowed}, text={text}")  # Debug
+        
         if action == '1':  # insert
             if value_if_allowed == "Digite o nome do cliente":
                 return True
@@ -46,15 +48,16 @@ class validators(format_entry):
             if not value_if_allowed.isalpha() and not value_if_allowed.isspace():
                 return False
         
-            
-        
-            
     def city_validate(self, action, value_if_allowed, text):
         if action == '1': # insert
             if value_if_allowed == "Digite a cidade do cliente":
                 return True
-            if not value_if_allowed.isalpha() and not value_if_allowed.isspace():
+            if not value_if_allowed.strip():
                 return False
+            if all(c.isalpha() or c.isspace() for c in value_if_allowed):
+                return True
+            return False
+        return False
         
     def zip_code_validate(self, action, value_if_allowed, text):
         if action == '1':  # Inserção de caractere
